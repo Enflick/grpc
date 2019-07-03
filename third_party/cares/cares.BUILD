@@ -25,6 +25,11 @@ config_setting(
 # iOS is not officially supported through C++.
 # This just helps with the build for now.
 config_setting(
+    name = "ios_i386",
+    values = {"cpu": "ios_i386"},
+)
+
+config_setting(
     name = "ios_x86_64",
     values = {"cpu": "ios_x86_64"},
 )
@@ -54,6 +59,7 @@ genrule(
 genrule(
     name = "ares_config_h",
     srcs = select({
+        ":ios_i386": ["@com_github_grpc_grpc//third_party/cares:config_darwin/ares_config.h"],
         ":ios_x86_64": ["@com_github_grpc_grpc//third_party/cares:config_darwin/ares_config.h"],
         ":ios_armv7": ["@com_github_grpc_grpc//third_party/cares:config_darwin/ares_config.h"],
         ":ios_armv7s": ["@com_github_grpc_grpc//third_party/cares:config_darwin/ares_config.h"],
